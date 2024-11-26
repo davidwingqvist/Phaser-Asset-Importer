@@ -36,32 +36,32 @@ class GraphicalInterface:
 
         # Add a label widget
         label = tk.Label(root, text="Enter Input Folder", bg="darkgray")
-        label.grid(row=0, column=0, sticky="nsew")  # Position the label in the first row
+        label.place(x=100, y=50)  # Position the label in the first row
 
         # Add an Entry widget for text input
         entry = tk.Entry(root, width=40)
-        entry.grid(row=1, column=0, padx=10, sticky="ew")  # Position the input field in the second row, first column
+        entry.place(x=10, y=100)  # Position the input field in the second row, first column
         entry.config(bg="red")
 
         # Add a button widget to open the folder dialog
         button = tk.Button(root, text="Browse", command=lambda: open_folder_dialog(entry))
-        button.grid(row=1, column=1, padx=10, sticky="ew")  # Use grid for the button
+        button.place(x=260, y=97)  # Use grid for the button
         
         outputFolderLabel = tk.Label(root, text="Enter Output Folder", bg="darkgray")
-        outputFolderLabel.grid(row=3, column=0, sticky="nsew")
+        outputFolderLabel.place(x=530, y=50)
         
         outputEntry = tk.Entry(root, width=40)
-        outputEntry.grid(row=4, column=0, padx=10, sticky="ew")  # Output directory entry
+        outputEntry.place(x=450, y=100)  # Output directory entry
         outputEntry.config(bg="red")
         
         outputButton = tk.Button(root, text="Browse", command=lambda: open_folder_dialog(outputEntry))
-        outputButton.grid(row=4, column=1, padx=10, sticky="ew")
+        outputButton.place(x=700, y=97)
 
         outputFileLabel = tk.Label(root, text="Output File Name:", bg="darkgray")
-        outputFileLabel.grid(row=5, column=0, padx=(10, 0), sticky="w")
+        outputFileLabel.place(x=500, y=150)
 
         outputFileEntry = tk.Entry(root, width=20)
-        outputFileEntry.grid(row=5, column=0, padx=(0, 115), sticky="e")
+        outputFileEntry.place(x=500, y=200)
         outputFileEntry.config(bg="red")
 
         def select_output_file_name():
@@ -70,13 +70,13 @@ class GraphicalInterface:
                 outputFileEntry.config(bg="green")
 
         outputFileButton = tk.Button(root, text="Select", width=10, command=select_output_file_name)
-        outputFileButton.grid(row=5, column=0, padx=(50, 0), sticky="e")
+        outputFileButton.place(x=650, y=197)
 
-        fileExtensionLabel = tk.Label(root, text="File Extension: ", bg="darkgray")
-        fileExtensionLabel.grid(row=6, column=0)
+        fileExtensionLabel = tk.Label(root, text="File Extensions: ", bg="darkgray")
+        fileExtensionLabel.place(x=100, y=150)
         
         fileExtensionEntry = tk.Entry(root, width=40)
-        fileExtensionEntry.grid(row=6, column=1)
+        fileExtensionEntry.place(x=25, y=200)
         
         def add_file_extension():
             user_input = fileExtensionEntry.get()
@@ -100,30 +100,30 @@ class GraphicalInterface:
             fileExtensionEntry.delete(0, tk.END)
                 
         
-        fileExtensionButton = tk.Button(root, text="add", command=add_file_extension)
-        fileExtensionButton.grid(row=7, column=1, padx=(50, 0), sticky="w")
+        fileExtensionButton = tk.Button(root, text="Add", command=add_file_extension, width=5)
+        fileExtensionButton.place(x=50, y=225)
         
-        fileExtensionRemoveButton = tk.Button(root, text="remove", command=remove_file_extension)
-        fileExtensionRemoveButton.grid(row=7, column=1, padx=(150, 150), sticky="ew")
+        fileExtensionRemoveButton = tk.Button(root, text="remove", command=remove_file_extension, width=10)
+        fileExtensionRemoveButton.place(x=110, y=225)
         
-        fileExtensionRemoveAllButton = tk.Button(root, text="clear", command=clear_file_extension)
-        fileExtensionRemoveAllButton.grid(row=7, column=1, padx=(0, 50), sticky="e")
+        fileExtensionRemoveAllButton = tk.Button(root, text="clear", command=clear_file_extension, width=5)
+        fileExtensionRemoveAllButton.place(x=200, y=225)
 
         soundButton = tk.Button(root, text="Sound", width=10, command=lambda: self.UpdateContentFrame("sound"))
-        soundButton.grid(column=0, row=9, sticky="w", padx=(0, 100))
+        soundButton.place(x=100 + (600 / 4) - ((10 * 5) / 2), y=275)
 
         textureButton = tk.Button(root, text="Texture", width=10, command=lambda: self.UpdateContentFrame("texture"))
-        textureButton.grid(column=0, row=9, sticky="ew", padx=(125, 125))
+        textureButton.place(x=100 + ((600 / 4) * 2) - ((10 * 7) / 2), y=275)
 
         animationButton = tk.Button(root, text="Animation", width=10, command=lambda: self.UpdateContentFrame("animation"))
-        animationButton.grid(column=0, row=9, sticky="e", padx=(100, 0))
+        animationButton.place(x=100 + ((600 / 4) * 3) - ((10 * 9) / 2), y=275)
 
-        self.content_frame = tk.Frame(root, bg="lightgray", width=400, height=300)
-        self.content_frame.grid(column=0, row=10, padx=(0, 0), pady=(0, 50), sticky="nsew")
+        self.content_frame = tk.Frame(root, bg="lightgray", width=600, height=300)
+        self.content_frame.place(x=100, y=300)
         self.content_frame.pack_propagate(False)
 
         exportButton = tk.Button(root, text="Export", width=20, command=self.ExportToJSON)
-        exportButton.grid(pady=(0, 25))
+        exportButton.place(x=400 - ((20 * 6) / 2), y=570)
 
         root.mainloop()
 
@@ -134,6 +134,9 @@ class GraphicalInterface:
         if type == "sound":
             label = tk.Label(self.content_frame, text="Sound Exporter", font=("Arial", 11), bg="lightgray")
             label.pack()
+            texture = tk.PhotoImage(file="ui/btn_icon_megaphone.png")
+            imageLabel = tk.Label(self.content_frame, image=texture)
+            imageLabel.pack()
 
         if type == "texture":
             label = tk.Label(self.content_frame, text="Texture Exporter", font=("Arial", 11), bg="lightgray")
