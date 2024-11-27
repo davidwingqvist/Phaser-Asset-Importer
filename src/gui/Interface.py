@@ -120,7 +120,7 @@ class GraphicalInterface:
 
         self.content_frame = tk.Frame(root, bg="lightgray", width=600, height=300)
         self.content_frame.place(x=100, y=300)
-        self.content_frame.pack_propagate(False)
+        self.content_frame.pack_propagate(False)  # Prevent the frame from resizing to fit its children
 
         exportButton = tk.Button(root, text="Export", width=20, command=self.ExportToJSON)
         exportButton.place(x=400 - ((20 * 6) / 2), y=570)
@@ -134,17 +134,26 @@ class GraphicalInterface:
         if type == "sound":
             label = tk.Label(self.content_frame, text="Sound Exporter", font=("Arial", 11), bg="lightgray")
             label.pack()
-            texture = tk.PhotoImage(file="ui/btn_icon_megaphone.png")
-            imageLabel = tk.Label(self.content_frame, image=texture)
-            imageLabel.pack()
+            texture = tk.PhotoImage(file=os.path.join(os.path.dirname(__file__), "../../ui/btn_icon_megaphone.png"))
+            imageLabel = tk.Label(self.content_frame, image=texture, bg="darkgray", borderwidth=2)
+            imageLabel.place(x=500, y=15)
+            self.texture = texture
 
         if type == "texture":
             label = tk.Label(self.content_frame, text="Texture Exporter", font=("Arial", 11), bg="lightgray")
             label.pack()
+            texture = tk.PhotoImage(file=os.path.join(os.path.dirname(__file__), "../../ui/btn_icon_photo.png"))
+            imageLabel = tk.Label(self.content_frame, image=texture, bg="darkgray", borderwidth=2)
+            imageLabel.place(x=500, y=15)
+            self.texture = texture
 
         if type == "animation":
             label = tk.Label(self.content_frame, text="Animation Exporter", font=("Arial", 11), bg="lightgray")
             label.pack()
+            texture = tk.PhotoImage(file=os.path.join(os.path.dirname(__file__), "../../ui/btn_icon_layout.png"))
+            imageLabel = tk.Label(self.content_frame, image=texture, bg="darkgray", borderwidth=2)
+            imageLabel.place(x=500, y=15)
+            self.texture = texture
 
     def ExportToJSON(self):
         pass
