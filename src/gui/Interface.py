@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 import os
+from gui.exporter import Exporter
 
 class GraphicalInterface:
     def __init__(self):
@@ -9,6 +10,7 @@ class GraphicalInterface:
         self.outputFolder = ""
         self.outputFile = ""
         self.fileExtension = []
+        self.exporter = Exporter()
 
         root.title('Phaser Asset Importer')
         root.geometry("800x600")
@@ -26,9 +28,15 @@ class GraphicalInterface:
         root.grid_rowconfigure(10, weight=0)   # Adjust row 10
 
         # Function to open folder dialog and get folder path
-        def open_folder_dialog(entry):  
+        def open_folder_dialog(entry, type):  
             initial_dir = os.getcwd()  # Get the current working directory
             folder_path = filedialog.askdirectory(initialdir=initial_dir)
+
+            if type == 1:
+                self.inputFolder = folder_path
+            if type == 2:
+                self.outputFolder = folder_path
+
             if folder_path:  # If a folder was selected (path is not empty)
                 entry.delete(0, tk.END)  # Clear any existing text in the entry field
                 entry.insert(0, folder_path)  # Insert the selected folder path into the entry field
@@ -44,7 +52,7 @@ class GraphicalInterface:
         entry.config(bg="red")
 
         # Add a button widget to open the folder dialog
-        button = tk.Button(root, text="Browse", command=lambda: open_folder_dialog(entry))
+        button = tk.Button(root, text="Browse", command=lambda: open_folder_dialog(entry, 1))
         button.place(x=260, y=97)  # Use grid for the button
         
         outputFolderLabel = tk.Label(root, text="Enter Output Folder", bg="darkgray")
@@ -54,7 +62,7 @@ class GraphicalInterface:
         outputEntry.place(x=450, y=100)  # Output directory entry
         outputEntry.config(bg="red")
         
-        outputButton = tk.Button(root, text="Browse", command=lambda: open_folder_dialog(outputEntry))
+        outputButton = tk.Button(root, text="Browse", command=lambda: open_folder_dialog(outputEntry, 2))
         outputButton.place(x=700, y=97)
 
         outputFileLabel = tk.Label(root, text="Output File Name:", bg="darkgray")
@@ -122,6 +130,9 @@ class GraphicalInterface:
         self.content_frame.place(x=100, y=300)
         self.content_frame.pack_propagate(False)  # Prevent the frame from resizing to fit its children
 
+        label = tk.Label(self.content_frame, text="None chosen.", font=("Arial", 11), bg="lightgray")
+        label.pack()
+
         exportButton = tk.Button(root, text="Export", width=20, command=self.ExportToJSON)
         exportButton.place(x=400 - ((20 * 6) / 2), y=570)
 
@@ -156,5 +167,5 @@ class GraphicalInterface:
             self.texture = texture
 
     def ExportToJSON(self):
-        pass
+        self.exporter.ExportToJSON(self)
         
