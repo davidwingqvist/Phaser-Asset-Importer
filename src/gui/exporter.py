@@ -39,18 +39,18 @@ class Exporter:
         # Get filenames without extension
         file_names_without_extension = [os.path.splitext(file)[0] for file in file_names]
 
+        # Extract the folder name from the inputFolder path dynamically
+        input_folder_name = os.path.basename(self.inputFolder)
+
         # Add file data to the dictionary
         for index, file in enumerate(file_names_without_extension):
+           # Construct the path using the folder name dynamically
+            final_path = os.path.join("assets", input_folder_name, file).replace("\\", "/")  # Ensure forward slashes for JSON
 
-            relative_path = os.path.relpath(file_names[index], self.inputFolder)
-            
-            # Prepend "assets/" to the relative path to ensure it's in the assets directory in the JSON
-            # This ensures that the file is referenced from the 'assets/' directory regardless of its original location
-            relative_path = os.path.join("assets", relative_path).replace("\\", "/")  # Use forward slashes for JSON
-
+            # Add the file information to the JSON structure
             self.data["preload"]["files"].append({
-                "key": file,
-                "path": relative_path
+                "key": os.path.splitext(file)[0],  # file name without extension
+                "path": final_path
             })
 
         # Create the output folder if it doesn't exist
