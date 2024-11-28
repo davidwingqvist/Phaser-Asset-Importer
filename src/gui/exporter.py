@@ -43,7 +43,7 @@ class Exporter:
         input_folder_name = os.path.basename(self.inputFolder)
 
         # Add file data to the dictionary
-        for index, file in enumerate(file_names_without_extension):
+        for index, file in enumerate(file_names):
            # Construct the path using the folder name dynamically
             final_path = os.path.join("assets", input_folder_name, file).replace("\\", "/")  # Ensure forward slashes for JSON
 
